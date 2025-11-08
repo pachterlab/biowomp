@@ -17,7 +17,8 @@
 #' @importFrom rlang sym .data
 #' @importFrom magrittr %>%
 #' @importFrom data.table :=
-#' @importFrom wompwomp data_preprocess data_sort
+# #' @importFrom wompwomp data_preprocess data_sort
+devtools::load_all("~/Desktop/local/wompwomp")
 
 utils::globalVariables(c(
     ".data", ":=", "%>%", "group_numeric", "col1_int", "col2_int", "id", "x", "y", "value", "stratum", "total", "cum_y", "best_cluster_agreement", "neighbor_net", "alluvium", "pos", "count", "group1", "group2", "value", "group1_size", "group2_size", "weight", "parent", "group_name"
@@ -343,7 +344,6 @@ find_group2_colors <- function(clus_df_gather, ditto_colors, unused_colors, curr
 #' @param box_line_width Box line width
 #' @param verbose Logical. If TRUE, will display messages during the function.
 #' @param print_params Logical. If TRUE, will print function params.
-#' @param make_intermediate_neighbornet_plots Internal flag; not recommended to modify.
 #' @param add_legend Logical. If TRUE, will generate a legend of the colors of boxes and alluvial
 #' @param legend_loc Character. Location of legend. Only applies if \code{add_legened == TRUE}. Choices are 'right' (default), 'left', 'bottom', 'top'
 #' @param flip_xy Logical. Flip x and y (rotate plot 90 degrees).
@@ -392,7 +392,6 @@ plot_alluvial <- function(df, graphing_columns = NULL, column1 = NULL, column2 =
                           auto_adjust_text = TRUE, axis_text_size = 2, axis_text_vjust = 0, save_height = 6, save_width = 6, dpi = 300, rasterise_alluvia = FALSE,
                           keep_y_labels = FALSE, keep_x_labels = TRUE, 
                           box_line_width = 1, verbose = FALSE, print_params = FALSE,
-                          make_intermediate_neighbornet_plots = FALSE,
                           add_legend = FALSE, legend_loc = "right", flip_xy=FALSE) {
     if (print_params) print_function_params()
     lowercase_args(c("sorting_algorithm", "column_sorting_metric", "column_sorting_algorithm", "coloring_algorithm", "coloring_algorithm_advanced_option", "default_sorting", "legend_loc"))
@@ -486,7 +485,7 @@ plot_alluvial <- function(df, graphing_columns = NULL, column1 = NULL, column2 =
     
     # Sort
     if (verbose) message(sprintf("Sorting data with sorting_algorithm=%s", sorting_algorithm))
-    data_sort_output <- data_sort(df = clus_df_gather_unsorted, graphing_columns = graphing_columns, column_weights = column_weights, sorting_algorithm = sorting_algorithm, optimize_column_order = optimize_column_order, optimize_column_order_per_cycle = optimize_column_order_per_cycle, matrix_initialization_value = matrix_initialization_value, same_side_matrix_initialization_value = same_side_matrix_initialization_value, weight_scalar = weight_scalar, weighted = weighted, matrix_initialization_value_column_order = matrix_initialization_value_column_order, weight_scalar_column_order = weight_scalar_column_order, column_sorting_metric = column_sorting_metric, column_sorting_algorithm = column_sorting_algorithm, cycle_start_positions = cycle_start_positions, fixed_column = fixed_column, random_initializations = random_initializations, output_df_path = output_df_path, return_updated_graphing_columns = TRUE, preprocess_data = FALSE, load_df = FALSE, verbose = verbose, make_intermediate_neighbornet_plots = make_intermediate_neighbornet_plots, do_compute_alluvial_statistics = do_compute_alluvial_statistics)
+    data_sort_output <- data_sort(df = clus_df_gather_unsorted, graphing_columns = graphing_columns, column_weights = column_weights, sorting_algorithm = sorting_algorithm, optimize_column_order = optimize_column_order, optimize_column_order_per_cycle = optimize_column_order_per_cycle, matrix_initialization_value = matrix_initialization_value, same_side_matrix_initialization_value = same_side_matrix_initialization_value, weight_scalar = weight_scalar, weighted = weighted, matrix_initialization_value_column_order = matrix_initialization_value_column_order, weight_scalar_column_order = weight_scalar_column_order, column_sorting_metric = column_sorting_metric, column_sorting_algorithm = column_sorting_algorithm, cycle_start_positions = cycle_start_positions, fixed_column = fixed_column, random_initializations = random_initializations, output_df_path = output_df_path, return_updated_graphing_columns = TRUE, preprocess_data = FALSE, load_df = FALSE, verbose = verbose, do_compute_alluvial_statistics = do_compute_alluvial_statistics)
     df <- data_sort_output$clus_df_gather  #!!! I'm overriding df here
     graphing_columns <- data_sort_output$graphing_columns
     
@@ -591,7 +590,7 @@ plot_alluvial <- function(df, graphing_columns = NULL, column1 = NULL, column2 =
                 }
             }
         } else if (coloring_algorithm == "advanced") {
-            check_python_setup_with_necessary_packages(necessary_packages_for_this_step = c("igraph", "leidenalg"), additional_message = "do not set coloring_algorithm to 'advanced'")
+            # check_python_setup_with_necessary_packages(necessary_packages_for_this_step = c("igraph", "leidenalg"), additional_message = "do not set coloring_algorithm to 'advanced'")
             final_colors <- find_colors_advanced(df, ditto_colors, graphing_columns, coloring_algorithm_advanced_option = coloring_algorithm_advanced_option, resolution = resolution)
         } else {
             col_group <- coloring_algorithm
@@ -844,7 +843,4 @@ plot_alluvial <- function(df, graphing_columns = NULL, column1 = NULL, column2 =
     }
     
     return(p)
-}
-    
-    return(alluvial_plot)
 }

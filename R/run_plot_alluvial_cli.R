@@ -21,6 +21,7 @@ Optional:
   --matrix_initialization_value Positive integer. Initialized value in distance matrix for nodes in different layers without a shared edge/path. Only applies when sorting_algorithm == 'tsp'.
   --same_side_matrix_initialization_value Positive integer. Initialized value in distance matrix for nodes in the same layer. Only applies when sorting_algorithm == 'tsp'.
   --weight_scalar Positive integer. Scalar with which to multiply edge weights after taking their -log in the distance matrix for nodes with a nonzero edge. Only applies when sorting_algorithm == 'tsp'.
+  --disable_weighted Logical. Disable weighted objective.
   --matrix_initialization_value_column_order Positive integer. Initialized value in distance matrix for optimizing column order. Only applies when sorting_algorithm == 'tsp' and optimize_column_order is TRUE.
   --weight_scalar_column_order Positive integer. Scalar with which to loss function after taking their log1p in the distance matrix for optimizing column order. Only applies when sorting_algorithm == 'tsp' and optimize_column_order is TRUE.
   --column_sorting_metric Character. Metric to use for determining column order. Options are 'edge_crossing' (default) or 'ARI'. Only applies when sorting_algorithm == 'tsp' and optimize_column_order is TRUE.
@@ -87,6 +88,7 @@ Optional:
     matrix_initialization_value <- get_numeric_arg(args, c("--matrix_initialization_value"))
     same_side_matrix_initialization_value <- get_numeric_arg(args, c("--same_side_matrix_initialization_value"))
     weight_scalar <- get_numeric_arg(args, c("--weight_scalar"))
+    weighted <- store_false(args, c("--disable_weighted"))
     matrix_initialization_value_column_order <- get_numeric_arg(args, c("--matrix_initialization_value_column_order"))
     weight_scalar_column_order <- get_numeric_arg(args, c("--weight_scalar_column_order"))
     column_sorting_metric <- get_arg(args, c("--column_sorting_metric"))
@@ -133,9 +135,6 @@ Optional:
     print_params <- store_true(args, c("--print_params"))
     quiet <- store_true(args, c("-q", "--quiet"))
 
-    # Hidden arguments
-    make_intermediate_neighbornet_plots <- store_true(args, c("make_intermediate_neighbornet_plots"))
-
     # Base argument list with required args
     args_list <- list(
         df = df,
@@ -153,6 +152,7 @@ Optional:
     if (!is.null(matrix_initialization_value)) args_list$matrix_initialization_value <- matrix_initialization_value
     if (!is.null(same_side_matrix_initialization_value)) args_list$same_side_matrix_initialization_value <- same_side_matrix_initialization_value
     if (!is.null(weight_scalar)) args_list$weight_scalar <- weight_scalar
+    if (!is.null(weighted)) args_list$weighted <- weighted
     if (!is.null(matrix_initialization_value_column_order)) args_list$matrix_initialization_value_column_order <- matrix_initialization_value_column_order
     if (!is.null(weight_scalar_column_order)) args_list$weight_scalar_column_order <- weight_scalar_column_order
     if (!is.null(column_sorting_metric)) args_list$column_sorting_metric <- column_sorting_metric
@@ -197,7 +197,6 @@ Optional:
     if (!is.null(add_legend)) args_list$add_legend <- add_legend
     if (!is.null(legend_loc)) args_list$legend_loc <- legend_loc
     if (!is.null(flip_xy)) args_list$flip_xy <- flip_xy
-    if (!is.null(make_intermediate_neighbornet_plots)) args_list$make_intermediate_neighbornet_plots <- make_intermediate_neighbornet_plots
 
     # Dynamically call function
     result <- do.call(plot_alluvial, args_list)

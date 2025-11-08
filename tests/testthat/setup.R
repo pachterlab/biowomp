@@ -8,7 +8,7 @@
 #     if (!is.null(conda_bin) && file.exists(conda_bin)) {
 #         # Check if the required conda env exists
 #         conda_envs <- tryCatch(reticulate::conda_list()$name, error = function(e) character(0))
-#         if (!"biowomp_env" %in% conda_envs) {
+#         if (!"wompwomp_env" %in% conda_envs) {
 #             # Try to create/setup env
 #             tryCatch(
 #                 {
@@ -16,19 +16,19 @@
 #                     conda_envs <- reticulate::conda_list()$name
 #                 },
 #                 error = function(e) {
-#                     message("Failed to create 'biowomp_env': ", conditionMessage(e))
+#                     message("Failed to create 'wompwomp_env': ", conditionMessage(e))
 #                 }
 #             )
 #         }
 #         
 #         # If env exists now, activate it
-#         if ("biowomp_env" %in% conda_envs) {
+#         if ("wompwomp_env" %in% conda_envs) {
 #             tryCatch({
-#                 reticulate::use_condaenv("biowomp_env", required = TRUE)
+#                 reticulate::use_condaenv("wompwomp_env", required = TRUE)
 #                 Sys.setenv(RETICULATE_PYTHON = reticulate::py_config()$python)
 #                 options(biowomp.python.ok = TRUE)
 #             }, error = function(e) {
-#                 message("Could not activate 'biowomp_env': ", conditionMessage(e))
+#                 message("Could not activate 'wompwomp_env': ", conditionMessage(e))
 #             })
 #         }
 #     }

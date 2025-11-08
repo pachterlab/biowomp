@@ -25,8 +25,7 @@ Imports:
     ggplot2,
     ggforce,
     ggalluvial,
-    ggfittext,
-    wompwomp
+    ggfittext
 Depends: R (>= 4.5.0)
 Suggests: 
     testthat (>= 3.0.0),

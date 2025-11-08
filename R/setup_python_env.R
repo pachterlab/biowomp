@@ -14,7 +14,7 @@
 #' }
 #'
 #' @export
-setup_python_env <- function(envname = "biowomp_env", packages = c(numpy = "numpy==1.23.5", splitspy = "splitspy", pandas = "pandas", scipy = "scipy", leidenalg = "leidenalg", igraph = "python-igraph"), use_conda = TRUE, yes = FALSE) {
+setup_python_env <- function(envname = "wompwomp_env", packages = c(numpy = "numpy==1.23.5", splitspy = "splitspy", pandas = "pandas", scipy = "scipy", leidenalg = "leidenalg", igraph = "python-igraph"), use_conda = TRUE, yes = FALSE) {
     if (use_conda) {
         conda_findable <- tryCatch(file.exists(reticulate::conda_binary()), error = function(e) FALSE)
         if (!conda_findable) {

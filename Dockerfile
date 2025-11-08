@@ -23,4 +23,4 @@ RUN apt-get update && \
 
 # Install wompwomp and set up Python environment
 RUN R -e "if (!require('remotes', quietly = TRUE)) install.packages('remotes'); \
-            remotes::install_github('pachterlab/wompwomp')"
+            remotes::install_github('pachterlab/wompwomp', upgrade='never')"

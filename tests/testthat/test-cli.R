@@ -1,4 +1,4 @@
-skip("Skipping this test file during development or check")
+# skip("Skipping this test file during development or check")
 
 # dev mode for testing, not for compiling
 dev <- !("biowomp" %in% installed.packages())  # !requireNamespace("biowomp", quietly = TRUE)
@@ -93,7 +93,7 @@ test_that("CLI plot_alluvial, no sort", {
         "--df", df_path,
         "--output_plot_path", output_path,
         "--sorting_algorithm", "none",
-        "--quiet", "TRUE"
+        "--quiet"
     )
     if (dev) {
         args <- c(args, "--dev")
@@ -118,7 +118,7 @@ test_that("CLI plot_alluvial, WOLF left fixed", {
         "--output_plot_path", output_path,
         "--sorting_algorithm", "greedy_wolf",
         "--fixed_column", 1,
-        "--quiet", "TRUE"
+        "--quiet"
     )
     if (dev) {
         args <- c(args, "--dev")
@@ -143,7 +143,7 @@ test_that("CLI plot_alluvial, WOLF right fixed", {
         "--output_plot_path", output_path,
         "--sorting_algorithm", "greedy_wolf",
         "--fixed_column", 2,
-        "--quiet", "TRUE"
+        "--quiet"
     )
     if (dev) {
         args <- c(args, "--dev")
@@ -167,7 +167,7 @@ test_that("CLI plot_alluvial, WBLF", {
         "--df", df_path,
         "--output_plot_path", output_path,
         "--sorting_algorithm", "greedy_wblf",
-        "--quiet", "TRUE"
+        "--quiet"
     )
     if (dev) {
         args <- c(args, "--dev")
@@ -193,7 +193,7 @@ test_that("CLI plot_alluvial, TSP", {
         "--output_plot_path", output_path,
         "--sorting_algorithm", "tsp",
         "--weight_scalar", "10",
-        "--quiet", "TRUE"
+        "--quiet"
     )
     if (dev) {
         args <- c(args, "--dev")

@@ -12,11 +12,11 @@ vignette: >
 ---
 
 ```{r}
-# devtools::load_all("path/to/biowomp")
-# devtools::load_all("path/to/wompwomp")
+devtools::load_all("/Users/joeyrich/Desktop/local/biowomp")
+devtools::load_all("/Users/joeyrich/Desktop/local/wompwomp")
 
-library(biowomp)
-library(wompwomp)
+# library(biowomp)
+# library(wompwomp)
 library(dplyr)
 library(ggplot2)
 library(ggalluvial)
@@ -183,3 +183,34 @@ print(paste0("Objective (NeighborNet): ", objective_nn))
 ```{r}
 sessioninfo::session_info()
 ```
+
+
+```{r}
+# devtools::load_all("~/Desktop/local/wompwomp")
+# devtools::load_all()
+
+# Paths
+command <- "plot_alluvial"
+df_path <- "/Users/joeyrich/Desktop/local/biowomp/tests/testthat/ground_truth/df_tests_cli.csv"
+output_path <- tempfile(fileext = ".png")
+dev <- !("biowomp" %in% installed.packages())
+cli_cmd_path <- system.file("exec", "biowomp", package = "biowomp")
+if (cli_cmd_path == "") {  # file not installed
+    cli_cmd_path <- file.path(here::here(), "exec", "biowomp")  # cli_cmd_path <- testthat::test_path("..", "..", "exec", "biowomp")
+}
+
+# Run CLI
+args <- c(
+    command,
+    "--df", df_path,
+    "--output_plot_path", output_path,
+    "--sorting_algorithm", "none",
+    "--quiet"
+)
+if (dev) {
+    args <- c(args, "--dev")
+}
+cat(cli_cmd_path, paste(args, collapse = " "), "\n")
+# system2(cli_cmd_path, args)
+```
+

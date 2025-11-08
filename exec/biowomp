@@ -7,7 +7,7 @@ DEV_MODE <- "--dev" %in% args || tolower(Sys.getenv("BIOWOMP_DEV_MODE")) == "tru
 download_missing_pkgs <- function() {
     # Install your package's runtime dependencies if missing
     required_pkgs <- c(
-        "wompwomp", "dplyr", "ggplot2", "ggforce", "ggalluvial", "igraph",
+        "dplyr", "ggplot2", "ggforce", "ggalluvial", "igraph",
         "tibble", "rlang", "tidyr", "magrittr", "data.table"
     )
     
@@ -102,7 +102,7 @@ sub_args <- args[-1]
 Sys.setenv(R_SCRIPT_FROM_CLI = "true")
 
 # setup python environment
-environment <- biowomp:::get_arg(sub_args, c("--environment"), default = "biowomp_env")
+environment <- biowomp:::get_arg(sub_args, c("--environment"), default = "wompwomp_env")
 use_conda <- biowomp:::store_false(sub_args, c("--disable_use_conda"))
 wompwomp::setup_python_env(environment, use_conda = use_conda)
 
