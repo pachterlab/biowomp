@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(wompwomp)
+library(biowomp)
 
-test_check("wompwomp")
+test_check("biowomp")

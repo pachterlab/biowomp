@@ -1,10 +1,10 @@
-name: wompwomp_env
+name: biowomp_env
 channels:
   - conda-forge
   - defaults
   - bioconda
   - r
-dependencies:  # one day, replace all dependencies with simply bioconductor-wompwomp (once wompwomp is on bioconda)
+dependencies:  # one day, replace all dependencies with simply bioconductor-biowomp (once biowomp is on bioconda)
   - r-base>=3.5.0
   - r-dplyr
   - r-ggplot2

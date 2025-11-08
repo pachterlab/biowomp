@@ -2,12 +2,12 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 
-DEV_MODE <- "--dev" %in% args || tolower(Sys.getenv("WOMPWOMP_DEV_MODE")) == "true"  # True iff --dev is passed OR WOMPWOMP_DEV_MODE=true (case-insensitive)
+DEV_MODE <- "--dev" %in% args || tolower(Sys.getenv("BIOWOMP_DEV_MODE")) == "true"  # True iff --dev is passed OR BIOWOMP_DEV_MODE=true (case-insensitive)
 
 download_missing_pkgs <- function() {
     # Install your package's runtime dependencies if missing
     required_pkgs <- c(
-        "dplyr", "ggplot2", "ggforce", "ggalluvial", "igraph",
+        "wompwomp", "dplyr", "ggplot2", "ggforce", "ggalluvial", "igraph",
         "tibble", "rlang", "tidyr", "magrittr", "data.table"
     )
     
@@ -71,21 +71,21 @@ if (DEV_MODE) {
     download_missing_pkgs()
     devtools::load_all(".")
 } else {
-    if (!requireNamespace("wompwomp", quietly = TRUE)) {
+    if (!requireNamespace("biowomp", quietly = TRUE)) {
         if (interactive()) {
-            install <- askYesNo("wompwomp is required but not installed. Install it now?")
+            install <- askYesNo("biowomp is required but not installed. Install it now?")
             if (isTRUE(install)) {
-                # remotes::install_github('pachterlab/wompwomp')
+                # remotes::install_github('pachterlab/biowomp')
                 remotes::install_local(here::here(), dependencies = FALSE)
             } else {
-                stop("The wompwomp is not installed. Please install it with `Rscript -e \"remotes::install_local('.', dependencies = FALSE)\"`, or run `export WOMPWOMP_DEV_MODE=TRUE` (requires devtools)\".")
+                stop("The biowomp is not installed. Please install it with `Rscript -e \"remotes::install_local('.', dependencies = FALSE)\"`, or run `export biowomp_DEV_MODE=TRUE` (requires devtools)\".")
             }
         } else {
-            stop("The wompwomp is not installed. Please install it with `Rscript -e \"remotes::install_local('.', dependencies = FALSE)\"`, or run `export WOMPWOMP_DEV_MODE=TRUE` (requires devtools)\".")
+            stop("The biowomp is not installed. Please install it with `Rscript -e \"remotes::install_local('.', dependencies = FALSE)\"`, or run `export biowomp_DEV_MODE=TRUE` (requires devtools)\".")
         }
     }
     # Use installed package (standard behavior during R CMD check or after install)
-    library(wompwomp)
+    library(biowomp)
 }
 
 
@@ -101,15 +101,15 @@ sub_args <- args[-1]
 # Set environment variable so downstream code can detect CLI mode
 Sys.setenv(R_SCRIPT_FROM_CLI = "true")
 
-# # setup python environment
-# environment <- wompwomp:::get_arg(sub_args, c("--environment"), default = "wompwomp_env")
-# use_conda <- wompwomp:::store_false(sub_args, c("--disable_use_conda"))
-# wompwomp::setup_python_env(environment, use_conda = use_conda)
+# setup python environment
+environment <- biowomp:::get_arg(sub_args, c("--environment"), default = "biowomp_env")
+use_conda <- biowomp:::store_false(sub_args, c("--disable_use_conda"))
+wompwomp::setup_python_env(environment, use_conda = use_conda)
 
 # set random seed
-set_seed <- wompwomp:::get_integer_arg(sub_args, "--set_seed")
+set_seed <- biowomp:::get_integer_arg(sub_args, "--set_seed")
 if (!is.null(set_seed)) {
     set.seed(set_seed)
 }
 
-wompwomp::run_cli(args)
+biowomp::run_cli(args)

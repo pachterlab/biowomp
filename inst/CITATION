@@ -1,4 +1,4 @@
-citHeader("To cite the wompwomp package in publications, use the following:")
+citHeader("To cite the biowomp package in publications, use the following:")
 
 bibentry(
   bibtype = "Article",

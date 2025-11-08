@@ -2,7 +2,7 @@
 run_plot_alluvial_cli <- function(args) {
     if (length(args) == 0 || any(args %in% c("--help", "-h"))) {
         cat("
-Usage: wompwomp plot_alluvial --input INPUT [options]
+Usage: biowomp plot_alluvial --input INPUT [options]
 
 Required:
   -i, --input, --df               A data frame, tibble, or CSV file path. Must be in one of two formats:

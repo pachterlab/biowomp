@@ -12,9 +12,11 @@ vignette: >
 ---
 
 ```{r}
-# devtools::load_all() # !!! erase
+# devtools::load_all("path/to/biowomp")
+# devtools::load_all("path/to/wompwomp")
 
-library(wompwomp)  #!!! uncomment
+library(biowomp)
+library(wompwomp)
 library(dplyr)
 library(ggplot2)
 library(ggalluvial)

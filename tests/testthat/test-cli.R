@@ -1,11 +1,11 @@
 skip("Skipping this test file during development or check")
 
 # dev mode for testing, not for compiling
-dev <- !("wompwomp" %in% installed.packages())  # !requireNamespace("wompwomp", quietly = TRUE)
+dev <- !("biowomp" %in% installed.packages())  # !requireNamespace("biowomp", quietly = TRUE)
 
-cli_cmd_path <- system.file("exec", "wompwomp", package = "wompwomp")
+cli_cmd_path <- system.file("exec", "biowomp", package = "biowomp")
 if (cli_cmd_path == "") {  # file not installed
-    cli_cmd_path <- file.path(here::here(), "exec", "wompwomp")  # cli_cmd_path <- testthat::test_path("..", "..", "exec", "wompwomp")
+    cli_cmd_path <- file.path(here::here(), "exec", "biowomp")  # cli_cmd_path <- testthat::test_path("..", "..", "exec", "biowomp")
 }
 
 type_checking_files <- function(output_path, truth_path, check = TRUE) {
@@ -78,7 +78,7 @@ compare_csvs <- function(output_path, truth_path, check = TRUE) {
     invisible(TRUE)
 }
 
-# ./exec/wompwomp plot_alluvial --df tests/testthat/ground_truth/df_tests_cli.csv --output_plot_path tests/testthat/ground_truth/sorting_none.png --sorting_algorithm none
+# ./exec/biowomp plot_alluvial --df tests/testthat/ground_truth/df_tests_cli.csv --output_plot_path tests/testthat/ground_truth/sorting_none.png --sorting_algorithm none
 test_that("CLI plot_alluvial, no sort", {
     # Paths
     command <- "plot_alluvial"
@@ -202,152 +202,4 @@ test_that("CLI plot_alluvial, TSP", {
     system2(cli_cmd_path, args)
 
     compare_images(output_path = output_path, truth_path = truth_path, check = TRUE)
-})
-
-test_that("CLI data_sort, WOLF left fixed", {
-    # Paths
-    command <- "data_sort"
-    df_path <- normalizePath(testthat::test_path("ground_truth", "df_tests_cli.csv"))
-    output_path <- tempfile(fileext = ".csv")
-    truth_path <- normalizePath(testthat::test_path("ground_truth", "sorting_wolf_left_df.csv"))
-
-    # Run CLI
-    args <- c(
-        command,
-        "--df", df_path,
-        "--output_df_path", output_path,
-        "--sorting_algorithm", "greedy_wolf",
-        "--fixed_column", 1,
-        "--quiet", "TRUE"
-    )
-    if (dev) {
-        args <- c(args, "--dev")
-    }
-    # cat(cli_cmd_path, paste(args, collapse = " "), "\n")
-    system2(cli_cmd_path, args)
-
-    compare_csvs(output_path = output_path, truth_path = truth_path, check = TRUE)
-})
-
-test_that("CLI data_sort, WOLF right fixed", {
-    # Paths
-    command <- "data_sort"
-    df_path <- normalizePath(testthat::test_path("ground_truth", "df_tests_cli.csv"))
-    output_path <- tempfile(fileext = ".csv")
-    truth_path <- normalizePath(testthat::test_path("ground_truth", "sorting_wolf_right_df.csv"))
-
-    # Run CLI
-    args <- c(
-        command,
-        "--df", df_path,
-        "--output_df_path", output_path,
-        "--sorting_algorithm", "greedy_wolf",
-        "--fixed_column", 2,
-        "--quiet", "TRUE"
-    )
-    if (dev) {
-        args <- c(args, "--dev")
-    }
-    # cat(cli_cmd_path, paste(args, collapse = " "), "\n")
-    system2(cli_cmd_path, args)
-
-    compare_csvs(output_path = output_path, truth_path = truth_path, check = TRUE)
-})
-
-# ./exec/wompwomp data_sort --df tests/testthat/ground_truth/df_tests_cli.csv --output_df_path tests/testthat/ground_truth/sorting_wblf_df.csv --sorting_algorithm greedy_wblf --graphing_columns tissue leiden
-test_that("CLI data_sort, WBLF", {
-    # Paths
-    command <- "data_sort"
-    df_path <- normalizePath(testthat::test_path("ground_truth", "df_tests_cli.csv"))
-    output_path <- tempfile(fileext = ".csv")
-    truth_path <- normalizePath(testthat::test_path("ground_truth", "sorting_wblf_df.csv"))
-
-    # Run CLI
-    args <- c(
-        command,
-        "--df", df_path,
-        "--output_df_path", output_path,
-        "--sorting_algorithm", "greedy_wblf",
-        "--quiet", "TRUE"
-    )
-    if (dev) {
-        args <- c(args, "--dev")
-    }
-    # cat(cli_cmd_path, paste(args, collapse = " "), "\n")
-    system2(cli_cmd_path, args)
-
-    compare_csvs(output_path = output_path, truth_path = truth_path, check = TRUE)
-})
-
-test_that("CLI data_sort, TSP", {
-    # Paths
-    set.seed(42)
-    command <- "data_sort"
-    df_path <- normalizePath(testthat::test_path("ground_truth", "df_tests_cli.csv"))
-    output_path <- tempfile(fileext = ".csv")
-    truth_path <- normalizePath(testthat::test_path("ground_truth", "sorting_tsp_df.csv"))
-
-    # Run CLI
-    args <- c(
-        command,
-        "--df", df_path,
-        "--output_df_path", output_path,
-        "--sorting_algorithm", "tsp",
-        "--weight_scalar", "10",
-        "--quiet", "TRUE"
-    )
-    if (dev) {
-        args <- c(args, "--dev")
-    }
-    # cat(cli_cmd_path, paste(args, collapse = " "), "\n")
-    system2(cli_cmd_path, args)
-
-    compare_csvs(output_path = output_path, truth_path = truth_path, check = TRUE)
-})
-
-# ./exec/wompwomp determine_crossing_edges --df tests/testthat/ground_truth/sorting_wblf_df.csv --output_df_path tests/testthat/ground_truth/crossing_wblf_df.csv --column1 col1_int --column2 col2_int
-test_that("CLI determine_crossing_edges", {
-    # Paths
-    command <- "determine_crossing_edges"
-    df_path <- normalizePath(testthat::test_path("ground_truth", "sorting_wblf_df.csv"))
-    output_path <- tempfile(fileext = ".csv")
-    truth_path <- normalizePath(testthat::test_path("ground_truth", "crossing_wblf_df.csv"))
-
-    # Run CLI
-    args <- c(
-        command,
-        "--df", df_path,
-        "--output_df_path", output_path,
-        "--column1", "col1_int",
-        "--column2", "col2_int",
-        "--quiet", "TRUE"
-    )
-    if (dev) {
-        args <- c(args, "--dev")
-    }
-    # cat(cli_cmd_path, paste(args, collapse = " "), "\n")
-    system2(cli_cmd_path, args)
-
-    compare_csvs(output_path = output_path, truth_path = truth_path, check = TRUE)
-})
-
-# ./exec/wompwomp determine_weighted_layer_free_objective --df tests/testthat/ground_truth/crossing_wblf_df.csv
-test_that("CLI determine_weighted_layer_free_objective", {
-    # Paths
-    command <- "determine_weighted_layer_free_objective"
-    df_path <- normalizePath(testthat::test_path("ground_truth", "crossing_wblf_df.csv"))
-
-    # Run CLI
-    args <- c(
-        command,
-        "--df", df_path
-    )
-    if (dev) {
-        args <- c(args, "--dev")
-    }
-    # cat(cli_cmd_path, paste(args, collapse = " "), "\n")
-    output <- system2(cli_cmd_path, args, stdout = TRUE)
-    num <- as.integer(gsub(".*\\s", "", output))
-
-    testthat::expect_equal(num, 14)
 })
