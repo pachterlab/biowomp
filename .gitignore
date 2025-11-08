@@ -1,0 +1,15 @@
+.Rproj.user
+*.Rproj
+**/.Rhistory
+**/.DS_Store
+tmp.Rmd
+tmp_files
+vignettes/output
+trash
+/doc/
+/Meta/
+*/.build.timestamp
+.DS_Store
+.Rhistory
+.Rproj.user/
+inst/doc
