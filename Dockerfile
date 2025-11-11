@@ -24,8 +24,10 @@ RUN apt-get update && \
 # Install wompwomp and set up Python environment
 RUN R -e "if (!require('remotes', quietly = TRUE)) install.packages('remotes'); \
             remotes::install_github('pachterlab/wompwomp@tmp', upgrade='never'); \
-            remotes::install_github('pachterlab/biowomp', upgrade='never')"
+            remotes::install_github('pachterlab/biowomp', dependencies=TRUE, upgrade='never')"
 
 # --- Clone biowomp and set working directory ---
-RUN git clone https://github.com/pachterlab/biowomp.git /home/rstudio/biowomp
+RUN git clone https://github.com/pachterlab/biowomp.git /home/rstudio/biowomp && \
+    chown -R rstudio:rstudio /home/rstudio/biowomp
+
 WORKDIR /home/rstudio/biowomp

@@ -38,6 +38,7 @@ Suggests:
     here,
     ggrastr,
     stringr,
+    reticulate,
     DuoClustering2018,
     BiocStyle,
     sessioninfo
