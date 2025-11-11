@@ -12,11 +12,11 @@ vignette: >
 ---
 
 ```{r}
-devtools::load_all("/Users/joeyrich/Desktop/local/biowomp")
-devtools::load_all("/Users/joeyrich/Desktop/local/wompwomp")
+# devtools::load_all("~/Desktop/local/biowomp")
+# devtools::load_all("~/Desktop/local/wompwomp")
 
-# library(biowomp)
-# library(wompwomp)
+library(biowomp)
+library(wompwomp)
 library(dplyr)
 library(ggplot2)
 library(ggalluvial)
@@ -40,10 +40,10 @@ GOT
 ```{r}
 graphing_columns <- c("Origin", "Starting.Affiliation", "End.of.S1", "End.of.S2", "End.of.S3", "End.of.S4", "End.of.S5", "End.of.S6", "End.of.S7")
 
-got_file <- system.file("extdata", "got_char.csv", package = "wompwomp")
+got_file <- system.file("extdata", "got_char.csv", package = "biowomp")
 if (got_file == "") {
     # Fallback to development location
-    got_file <- file.path(here::here("extdata", "got_char.csv"))
+    got_file <- file.path(here::here("inst", "extdata", "got_char.csv"))
 }
 # got_file <- file.path(output_dir, "got_char.csv")
 # if (!file.exists(got_file)) {

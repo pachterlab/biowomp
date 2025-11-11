@@ -1,15 +1,13 @@
-# wompwomp
+# biowomp
 
-Make alluvial plots with node order and colors optimized to minimize edge crossings with wompwomp! Builds on top of the sorting algorithm in [wompwomp](https://github.com/pachterlab/wompwomp).
+Make alluvial plots with node order and colors optimized to minimize edge crossings with biowomp! Builds on top of the sorting algorithm in [wompwomp](https://github.com/pachterlab/wompwomp).
 
-wompwomp solves the **W**eighted (permutation) **O**ptimization of **M**ultiple **P**artitions-**W**eighted (label) **O**ptimization of **M**ultiple **P**artitions (W<sub>P</sub>OMP--W<sub>L</sub>OMP) problem.
+<!-- ![alt text](https://github.com/pachterlab/biowomp/blob/main/figures/wompwomp_before_after.png) -->
+<img src="https://github.com/pachterlab/biowomp/blob/main/figures/wompwomp_before_after.png" width="600">
 
-<!-- ![alt text](https://github.com/pachterlab/wompwomp/blob/main/figures/wompwomp_before_after.png) -->
-<img src="https://github.com/pachterlab/wompwomp/blob/main/figures/wompwomp_before_after.png" width="600">
+## biowomp functions/commands
 
-## wompwomp functions/commands
-
-![alt text](https://github.com/pachterlab/wompwomp/blob/main/figures/schematic.png)
+![alt text](https://github.com/pachterlab/biowomp/blob/main/figures/schematic.png)
 
 ## Installation:
 
@@ -19,21 +17,21 @@ Bioconductor (not yet released on Bioconductor - please install from GitHub)
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install("wompwomp")
+BiocManager::install("biowomp")
 ```
 
 GitHub
 ```
 if (!require("remotes", quietly = TRUE))
     install.packages("remotes")
-remotes::install_github("pachterlab/wompwomp")
+remotes::install_github("pachterlab/biowomp")
 ```
 
 ### Command line - Does not require system R to be installed if using conda.
 
 ```         
-git clone https://github.com/pachterlab/wompwomp
-cd wompwomp
+git clone https://github.com/pachterlab/biowomp
+cd biowomp
 conda env create -f environment.yml  # or to avoid conda: Rscript inst/install.R
 conda activate wompwomp_env  # skip if used install.R above
 Rscript -e 'remotes::install_local(".")' # or use --dev flag in commands
@@ -42,10 +40,10 @@ Rscript -e 'remotes::install_local(".")' # or use --dev flag in commands
 The first time any command is run on the command line, a prompt will appear asking to install any missing R dependencies.
 
 ### Docker
-We provide an Docker image for running wompwomp built on [rocker/tidyverse](https://rocker-project.org)
+We provide an Docker image for running biowomp built on [rocker/tidyverse](https://rocker-project.org)
 
 ```
-docker run -it -p 8787:8787 -e PASSWORD=<YOUR_PASS> josephrich98/wompwomp:latest
+docker run -it -p 8787:8787 -e PASSWORD=<YOUR_PASS> josephrich98/biowomp:latest
 ```
 
 Then vist "http://localhost:8787" in a browser and use username: rstudio, password: <YOUR_PASS> (change password as desired after "-e").
@@ -53,25 +51,20 @@ Then vist "http://localhost:8787" in a browser and use username: rstudio, passwo
 
 ## Usage
 
-The I/O for each of wompwomp's functions is as follows:
+The I/O for each of biowomp's functions is as follows:
 
 1.  plot_alluvial: dataframe, csv, or tibble (grouped or ungrouped) --\> plot
-2.  data_preprocess: dataframe, csv, or tibble (grouped or ungrouped) --\> dataframe (grouped)
-3.  data_sort: dataframe, csv, or tibble (grouped or ungrouped) --\> dataframe (grouped)
-4.  plot_alluvial_internal: dataframe, csv, or tibble (grouped) --\> plot
-5.  determine_crossing_edges: dataframe, csv, or tibble (grouped or ungrouped) --\> list
-6.  determine_weighted_layer_free_objective: dataframe, csv, or tibble (grouped or ungrouped) --\> integer
 
 The input table can have one of two formats:
-1. Ungrouped: columns specified by column1 and column2, where each row corresponds to a separate entity
-2. Grouped: columns specified by column1, column2, and column_weights, where each row corresponds to a combination of column1 and column2, and column_weights specified the number of items in this combination
+1. Ungrouped: columns specified by graphing_columns, where each row corresponds to a separate entity
+2. Grouped: columns specified by graphing_columns and column_weights, where each row corresponds to a combination of graphing_columns, and column_weights specified the number of items in this combination
 
 ## Examples in R
 
 Ungrouped input
 
 ```         
-library("wompwomp")
+library("biowomp")
 df <- data.frame(method1 = sample(1:3, 100, TRUE), method2 = sample(1:3, 100, TRUE))
 head(df)
 #>   method1    method2
@@ -114,23 +107,23 @@ p
 ## Examples in Command Line:
 
 ``` bash
-./exec/wompwomp plot_alluvial --df mydata.csv --graphing_columns column1 column2
+./exec/biowomp plot_alluvial --df mydata.csv --graphing_columns column1 column2
 ```
 
-For help on any command, run `./exec/wompwomp COMMAND --help`
+For help on any command, run `./exec/biowomp COMMAND --help`
 
 Notes about command line usage:
 - all parameter values should be space-separted
-ex. ./exec/wompwomp plot_alluvial --df data.csv, NOT --df=data.csv
+ex. ./exec/biowomp plot_alluvial --df data.csv, NOT --df=data.csv
 - all parameters that take a single argument have identical names between R and command line, with the value immediately following the argument
-ex. plot_alluvial(df=data.csv), ./exec/wompwomp plot_alluvial --df data.csv
+ex. plot_alluvial(df=data.csv), ./exec/biowomp plot_alluvial --df data.csv
 - all parameters that take a vector/list of arguments have identical names between R and command line, with the values immediately following the argument, all separated by spaced
-ex. plot_alluvial(graphing_columns=c("tissue", "cluster")), ./exec/wompwomp plot_alluvial --graphing_columns tissue cluster
+ex. plot_alluvial(graphing_columns=c("tissue", "cluster")), ./exec/biowomp plot_alluvial --graphing_columns tissue cluster
 - all parameters that take a named vector/list as argument will be passed with format KEY=VALUE on command line (all interpreted as character)
-ex. plot_alluvial(color_band_list=c("A"="blue", "B"="green"), ./exec/wompwomp plot_alluvial --color_band_list A=blue B=green
+ex. plot_alluvial(color_band_list=c("A"="blue", "B"="green"), ./exec/biowomp plot_alluvial --color_band_list A=blue B=green
 - all boolean parameters are passed with the flag without any following arguments; boolean parameters that default to FALSE have identical names between R and command line, while boolean parameters that default to TRUE have "disable_" prepended to the name in the command line
-ex. (note that the defaults for include_group_sizes=FALSE and include_axis_titles=TRUE): plot_alluvial(include_group_sizes=TRUE, include_axis_titles=FALSE), ./exec/wompwomp plot_alluvial --include_group_sizes --disable_include_axis_titles
+ex. (note that the defaults for include_group_sizes=FALSE and include_axis_titles=TRUE): plot_alluvial(include_group_sizes=TRUE, include_axis_titles=FALSE), ./exec/biowomp plot_alluvial --include_group_sizes --disable_include_axis_titles
 
-## See a full tutorial in our introductory vignette [wompwomp-intro.Rmd](vignettes/wompwomp-intro.Rmd)
+## See a full tutorial in our introductory vignette [biowomp-intro.Rmd](vignettes/biowomp-intro.Rmd)
 
 Read our preprint on arXiv [here](https://doi.org/10.48550/arXiv.2509.03761).

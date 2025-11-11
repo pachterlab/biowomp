@@ -12,8 +12,8 @@ vignette: >
 ---
 
 ```{r}
-devtools::load_all("/Users/joeyrich/Desktop/local/biowomp")
-devtools::load_all("/Users/joeyrich/Desktop/local/wompwomp")
+devtools::load_all("~/Desktop/local/biowomp")
+devtools::load_all("~/Desktop/local/wompwomp")
 
 # library(biowomp)
 # library(wompwomp)
@@ -101,40 +101,10 @@ plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "none
 ```
 
 ```{r}
-# clus_df_gather_tmp <- data_preprocess(df = df, graphing_columns = graphing_columns, load_df = FALSE, do_gather_set_data = FALSE)
-# data_sort_output <- data_sort(clus_df_gather_tmp, graphing_columns = graphing_columns, column_weights = "value", sorting_algorithm = "tsp", optimize_column_order = FALSE, optimize_column_order_per_cycle = TRUE, return_updated_graphing_columns = TRUE, verbose = TRUE)
-# clus_df_gather_tmp_sorted <- data_sort_output$clus_df_gather
-# graphing_columns_reordered <- data_sort_output$graphing_columns
-# out <- determine_crossing_edges(clus_df_gather_tmp_sorted, graphing_columns = graphing_columns_reordered, column_weights = "value", return_weighted_layer_free_objective = FALSE)
-# print(out$output_objective)
-# # print(out$crossing_edges_df)
-
-# graph what I did above
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, optimize_column_order = FALSE, optimize_column_order_per_cycle = TRUE, weight_scalar = 1, resolution = 2, output_plot_path = file.path(output_dir, "3layer_NN_fixed_columns.pdf"), verbose = TRUE)
 ```
 
 ```{r}
-# clus_df_gather_tmp <- data_preprocess(df = df, graphing_columns = graphing_columns, load_df = FALSE, do_gather_set_data = FALSE)
-# data_sort_output <- data_sort(clus_df_gather_tmp, graphing_columns = graphing_columns, column_weights = "value", sorting_algorithm = "tsp", optimize_column_order = TRUE, optimize_column_order_per_cycle = TRUE, return_updated_graphing_columns = TRUE, verbose = TRUE)
-# clus_df_gather_tmp_sorted <- data_sort_output$clus_df_gather
-# graphing_columns_reordered <- data_sort_output$graphing_columns
-# out <- determine_crossing_edges(clus_df_gather_tmp_sorted, graphing_columns = graphing_columns_reordered, column_weights = "value", return_weighted_layer_free_objective = FALSE)
-# print(out$output_objective)
-# # print(out$crossing_edges_df)
-#
-# # print(out$crossing_edges_df[out$crossing_edges_df$strat_layer == 1,
-# #       c("alluvium1", "alluvium2", "strat_layer",
-# #         "stratum1_char1", "stratum2_char1",
-# #         "stratum1_char2", "stratum2_char2",
-# #         "weight1", "weight2")])
-#
-# # print(out$crossing_edges_df[out$crossing_edges_df$strat_layer == 2,
-# #       c("alluvium1", "alluvium2", "strat_layer",
-# #         "stratum2_char1", "stratum3_char1",
-# #         "stratum2_char2", "stratum3_char2",
-# #         "weight1", "weight2")])
-
-# graph what I did above
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, optimize_column_order = TRUE, optimize_column_order_per_cycle = TRUE, weight_scalar = 1, resolution = 2, output_plot_path = file.path(output_dir, "3layer_NN_optimized_columns.pdf"), verbose = TRUE)
 ```
 
@@ -273,7 +243,7 @@ b <- rep(1:n_groups, times = n_groups * block_size) # each b group repeats acros
 
 df <- data.frame(a = a, b = b)
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_0.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)
@@ -309,7 +279,7 @@ for (i in 1:n_groups) {
 df <- data.frame(a = a, b = b)
 
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_02.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)
@@ -344,7 +314,7 @@ for (i in 1:n_groups) {
 df <- data.frame(a = a, b = b)
 
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_05.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)
@@ -380,7 +350,7 @@ for (i in 1:n_groups) {
 df <- data.frame(a = a, b = b)
 
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_08.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)
@@ -398,7 +368,7 @@ b <- rep(1:n_groups, each = rows_per_group)
 df <- data.frame(a = a, b = b)
 
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_1.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)
@@ -418,7 +388,7 @@ b <- c(
 df <- data.frame(a = a, b = b)
 
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_05_split_left.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)
@@ -438,7 +408,7 @@ a <- c(
 df <- data.frame(a = a, b = b)
 
 clus_df_gather <- data_sort(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp")
-determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns, normalize_objective = TRUE, return_weighted_layer_free_objective = TRUE)
+determine_crossing_edges(clus_df_gather, graphing_columns = graphing_columns)$output_objective
 mclust::adjustedRandIndex(df$a, df$b)
 
 plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, color_boxes = TRUE, verbose = TRUE, output_plot_path = file.path(output_dir, "ari_05_split_right.pdf"), text_size = 15, axis_text_size = 25, axis_text_vjust = 0, coloring_algorithm = "none", color_val = list("1" = "#D55E00", "2" = "#56B4E9", "3" = "#009E73", "4" = "#F0E442", "5" = "#0072B2"), color_band_column = "a", include_axis_titles = FALSE)

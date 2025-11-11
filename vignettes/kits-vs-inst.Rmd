@@ -12,11 +12,11 @@ vignette: >
 ---
 
 ```{r}
-devtools::load_all("/Users/joeyrich/Desktop/local/biowomp")
-devtools::load_all("/Users/joeyrich/Desktop/local/wompwomp")
+# devtools::load_all("~/Desktop/local/biowomp")
+# devtools::load_all("~/Desktop/local/wompwomp")
 
-# library(biowomp)
-# library(wompwomp)
+library(biowomp)
+library(wompwomp)
 library(dplyr)
 library(ggplot2)
 library(ggalluvial)
@@ -93,17 +93,6 @@ p2
 p <- plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "tsp", color_bands = TRUE, coloring_algorithm = "left", cutoff = 0.5, resolution = 4, verbose = TRUE, output_plot_path = file.path(output_dir, "Segmentation_NN.pdf"), min_text = 0.01, save_height = 24, save_width = 24, text_size = 35, axis_text_size = 35, axis_text_vjust = -5)
 p
 ```
-
-WOLF
-```{r}
-set.seed(42)
-plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "greedy_wolf", fixed_column = "KiTS_dice_score_binned", color_bands = TRUE, resolution = 4, verbose = TRUE, random_initializations = 3)
-
-set.seed(42)
-plot_alluvial(df, graphing_columns = graphing_columns, sorting_algorithm = "greedy_wblf", color_bands = TRUE, resolution = 4, verbose = TRUE, random_initializations = 3)
-```
-
-
 
 ```{r}
 graphing_columns <- c("gender", "Race", "radiographic_size_binned", "KiTS_dice_score_binned_broad")

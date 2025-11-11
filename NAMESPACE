@@ -2,7 +2,6 @@
 
 export(plot_alluvial)
 export(run_cli)
-export(setup_python_env)
 importFrom(data.table,":=")
 importFrom(dplyr,across)
 importFrom(dplyr,add_count)
