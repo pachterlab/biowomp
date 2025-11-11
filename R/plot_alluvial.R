@@ -17,8 +17,8 @@
 #' @importFrom rlang sym .data
 #' @importFrom magrittr %>%
 #' @importFrom data.table :=
-# #' @importFrom wompwomp data_preprocess data_sort
-devtools::load_all("~/Desktop/local/wompwomp")
+#' @importFrom wompwomp data_preprocess data_sort
+# devtools::load_all("~/Desktop/local/wompwomp")
 
 utils::globalVariables(c(
     ".data", ":=", "%>%", "group_numeric", "col1_int", "col2_int", "id", "x", "y", "value", "stratum", "total", "cum_y", "best_cluster_agreement", "neighbor_net", "alluvium", "pos", "count", "group1", "group2", "value", "group1_size", "group2_size", "weight", "parent", "group_name"
@@ -469,7 +469,7 @@ plot_alluvial <- function(df, graphing_columns = NULL, column1 = NULL, column2 =
     # Preprocess
     if (preprocess_data) {
         if (verbose) message("Preprocessing data before sorting")
-        clus_df_gather_unsorted <- data_preprocess(df = df, graphing_columns = graphing_columns, column_weights = column_weights, color_band_column = color_band_column, default_sorting = default_sorting, load_df = FALSE, do_gather_set_data = FALSE)
+        clus_df_gather_unsorted <- wompwomp::data_preprocess(df = df, graphing_columns = graphing_columns, column_weights = column_weights, color_band_column = color_band_column, default_sorting = default_sorting, load_df = FALSE, do_gather_set_data = FALSE)
         if (is.null(column_weights)) {
             column_weights <- "value" # is set during data_preprocess
         }
@@ -485,7 +485,7 @@ plot_alluvial <- function(df, graphing_columns = NULL, column1 = NULL, column2 =
     
     # Sort
     if (verbose) message(sprintf("Sorting data with sorting_algorithm=%s", sorting_algorithm))
-    data_sort_output <- data_sort(df = clus_df_gather_unsorted, graphing_columns = graphing_columns, column_weights = column_weights, sorting_algorithm = sorting_algorithm, optimize_column_order = optimize_column_order, optimize_column_order_per_cycle = optimize_column_order_per_cycle, matrix_initialization_value = matrix_initialization_value, same_side_matrix_initialization_value = same_side_matrix_initialization_value, weight_scalar = weight_scalar, weighted = weighted, matrix_initialization_value_column_order = matrix_initialization_value_column_order, weight_scalar_column_order = weight_scalar_column_order, column_sorting_metric = column_sorting_metric, column_sorting_algorithm = column_sorting_algorithm, cycle_start_positions = cycle_start_positions, fixed_column = fixed_column, random_initializations = random_initializations, output_df_path = output_df_path, return_updated_graphing_columns = TRUE, preprocess_data = FALSE, load_df = FALSE, verbose = verbose, do_compute_alluvial_statistics = do_compute_alluvial_statistics)
+    data_sort_output <- wompwomp::data_sort(df = clus_df_gather_unsorted, graphing_columns = graphing_columns, column_weights = column_weights, sorting_algorithm = sorting_algorithm, optimize_column_order = optimize_column_order, optimize_column_order_per_cycle = optimize_column_order_per_cycle, matrix_initialization_value = matrix_initialization_value, same_side_matrix_initialization_value = same_side_matrix_initialization_value, weight_scalar = weight_scalar, weighted = weighted, matrix_initialization_value_column_order = matrix_initialization_value_column_order, weight_scalar_column_order = weight_scalar_column_order, column_sorting_metric = column_sorting_metric, column_sorting_algorithm = column_sorting_algorithm, cycle_start_positions = cycle_start_positions, fixed_column = fixed_column, random_initializations = random_initializations, output_df_path = output_df_path, return_updated_graphing_columns = TRUE, preprocess_data = FALSE, load_df = FALSE, verbose = verbose, do_compute_alluvial_statistics = do_compute_alluvial_statistics)
     df <- data_sort_output$clus_df_gather  #!!! I'm overriding df here
     graphing_columns <- data_sort_output$graphing_columns
     

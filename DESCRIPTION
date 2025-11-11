@@ -41,6 +41,8 @@ Suggests:
     DuoClustering2018,
     BiocStyle,
     sessioninfo
+Remotes:
+    github::pachterlab/wompwomp@tmp
 Config/testthat/edition: 3
 biocViews: MathematicalBiology, Clustering, GraphAndNetwork, Visualization
 URL: https://github.com/pachterlab/biowomp
