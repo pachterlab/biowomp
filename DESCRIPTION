@@ -18,8 +18,6 @@ Imports:
     magrittr,
     data.table,
     purrr,
-    TSP,
-    R6,
     stats,
     utils,
     ggplot2,

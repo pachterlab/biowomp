@@ -17,8 +17,8 @@
 #' @importFrom rlang sym .data
 #' @importFrom magrittr %>%
 #' @importFrom data.table :=
-#' @importFrom wompwomp data_preprocess data_sort
-# devtools::load_all("~/Desktop/local/wompwomp")
+# #' @importFrom wompwomp data_preprocess data_sort
+devtools::load_all("~/Desktop/local/wompwomp")
 
 utils::globalVariables(c(
     ".data", ":=", "%>%", "group_numeric", "col1_int", "col2_int", "id", "x", "y", "value", "stratum", "total", "cum_y", "best_cluster_agreement", "neighbor_net", "alluvium", "pos", "count", "group1", "group2", "value", "group1_size", "group2_size", "weight", "parent", "group_name"
