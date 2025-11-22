@@ -124,6 +124,6 @@ ex. plot_alluvial(color_band_list=c("A"="blue", "B"="green"), ./exec/biowomp plo
 - all boolean parameters are passed with the flag without any following arguments; boolean parameters that default to FALSE have identical names between R and command line, while boolean parameters that default to TRUE have "disable_" prepended to the name in the command line
 ex. (note that the defaults for include_group_sizes=FALSE and include_axis_titles=TRUE): plot_alluvial(include_group_sizes=TRUE, include_axis_titles=FALSE), ./exec/biowomp plot_alluvial --include_group_sizes --disable_include_axis_titles
 
-## See a full tutorial in our introductory vignette [biowomp-intro.Rmd](vignettes/biowomp-intro.Rmd)
+## See a full tutorial in our introductory vignette [biowomp_intro.Rmd](vignettes/biowomp_intro.Rmd)
 
 Read our preprint on arXiv [here](https://doi.org/10.48550/arXiv.2509.03761).
